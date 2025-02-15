@@ -2,11 +2,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Library, TrendingUp, Users, MessageSquare } from "lucide-react";
+import { Home, Library, TrendingUp, Users, MessageSquare, LogIn ,LogOut } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const ResponsiveMenu = ({ open, setOpen }) => {
   const menuRef = useRef(null);
   const location = useLocation();
+  
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
   // Memoized click outside handler to prevent unnecessary re-renders
   const handleClickOutside = useCallback((event) => {
@@ -39,6 +42,16 @@ export const ResponsiveMenu = ({ open, setOpen }) => {
     setOpen(false);
   };
 
+
+  const handleAuth = () => {
+    if (isAuthenticated) {
+      logout({ logoutParams: { returnTo: window.location.origin } });
+    } else {
+      loginWithRedirect();
+    }
+    handleLinkClick();
+  };
+  
   const menuItems = [
     { path: "/", label: "Home", icon: Home },
     { path: "/collections", label: "Collection", icon: Library },
@@ -76,6 +89,21 @@ export const ResponsiveMenu = ({ open, setOpen }) => {
                   </Link>
                 </li>
               ))}
+              <li className="mt-6">
+                <button
+                  onClick={handleAuth}
+                  className="flex items-center gap-3 w-full px-4 py-3 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:translate-x-2"
+                >
+                  {isAuthenticated ? (
+                    <LogOut className="w-5 h-5 text-white" />
+                  ) : (
+                    <LogIn className="w-5 h-5 text-white" />
+                  )}
+                  <span className="text-white font-medium">
+                    {isAuthenticated ? "Logout" : "Login"}
+                  </span>
+                </button>
+              </li>
             </ul>
           </div>
         </motion.div>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Heart, Search, Menu, ShoppingBag } from "lucide-react";
+import { Heart, Search, Menu, ShoppingBag, LogIn, LogOut } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavbarMenu } from "../mockdata/data";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -211,7 +211,16 @@ const Navbar = ({ cartCount, wishlistCount, updateCartCount, updateWishlistCount
               }
               className="hidden md:block px-6 py-2 rounded-full font-medium text-white bg-gradient-to-r from-orange-500 to-pink-500 hover:opacity-90 transition-opacity"
             >
-              {isAuthenticated ? "Logout" : "Login"}
+            <div className="flex">
+              {isAuthenticated ? (
+                <LogOut className="w-5 h-5 text-white" />
+              ) : (
+                <LogIn className="w-5 h-5 text-white" />
+              )}
+              <span className="text-white font-medium ps-2">
+                {isAuthenticated ? "Logout" : "Login"}
+              </span>
+              </div>
             </button>
 
             {/* Mobile Menu Button */}
@@ -226,7 +235,7 @@ const Navbar = ({ cartCount, wishlistCount, updateCartCount, updateWishlistCount
       </div>
 
       {/* Mobile Menu */}
-      <div className={`fixed inset-0 z-[75] lg:hidden ${open ? 'visible' : 'invisible'}`}>
+      <div className={`fixed inset-0 z-[999] lg:hidden ${open ? 'visible' : 'invisible'}`}>
         <div
           className="absolute inset-0 bg-black/50"
           onClick={() => setOpen(false)}

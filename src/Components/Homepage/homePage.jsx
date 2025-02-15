@@ -346,7 +346,7 @@ export default function Home({ updateCartCount, cartCount, updateWishlistCount }
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.7, duration: 0.8 }}
-                    className="absolute top-0 right-2 md:right-4 bg-white p-2 md:p-4 rounded-b-lg md:rounded-b-xl shadow-lg z-20 w-auto"
+                    className="absolute top-0 right-2 md:right-4 bg-white p-2 md:p-4 rounded-b-lg md:rounded-b-xl shadow-lg  w-auto"
                   >
                     <div className="flex items-center gap-2 md:gap-3">
                       <div>
